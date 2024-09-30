@@ -1,118 +1,95 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from "react";
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
   View,
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const counterApp = () => {
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  const [count, setCount] = useState(0);
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const AddCount = () => {
+    setCount(count + 1);
+  }
+
+  const SubstractCount = () => {
+    setCount(count - 1);
+  }
+
+  const ResetCount = () => {
+    setCount(0);
+  }
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.headingText}>Counter</Text>
+
+      <View style={styles.counterContainer}>
+        <TouchableOpacity style={styles.button} onPress={SubstractCount}>
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.counterText}>{count}</Text>
+
+        <TouchableOpacity style={styles.button} onPress={AddCount}>
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity style={styles.resetButton} onPress={ResetCount}>
+        <Text style={styles.resetButtonText}>Reset</Text>
+      </TouchableOpacity>
     </View>
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
-  sectionTitle: {
+  headingText: {
+    fontSize: 30,
+    marginBottom: 40,
+    fontWeight: 'bold',
+    color: 'black'
+  },
+  counterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    padding: 20,
+    borderRadius: 5,
+    marginHorizontal: 10,
+  },
+  buttonText: {
     fontSize: 24,
-    fontWeight: '600',
+    color: '#FFF',
+    fontWeight: 'bold',
   },
-  sectionDescription: {
-    marginTop: 8,
+  counterText: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    paddingHorizontal: 20,
+  },
+  resetButton: {
+    marginTop: 20,
+    backgroundColor: '#FF4136',
+    padding: 10,
+    borderRadius: 5,
+  },
+  resetButtonText: {
     fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+    color: '#FFF',
+    fontWeight: 'bold',
   },
 });
 
-export default App;
+export default counterApp;
